@@ -10,14 +10,14 @@ class Parser():
 
     def parse(self):
         self.array = []
-
+        self.n_elements = 0
         with open(self.file_in, 'r') as fin:
             with open(self.file_out, 'w') as fout:
 
                 linea = fin.readlines()
                 for i in range(len(linea)):
-                    if "incidenciaGeolocalizada" in linea[i]:
-                        inci = Incidencia(self.removeTag(linea[i+1]),
+                    if "<incidenciaGeolocalizada" in linea[i]:
+                            inci = Incidencia(self.removeTag(linea[i+1]),
                                         self.removeTag(linea[i+2]),
                                         self.removeTag(linea[i+3]),
                                         self.removeTag(linea[i+4]),
@@ -32,14 +32,13 @@ class Parser():
                                         self.removeTag(linea[i+13]),
                                         self.removeTag(linea[i+14]))
 
-                        print inci.toString()
-                        return
-
-
+                            if inci.provincia == "GIPUZKOA":
+                                self.n_elements += 1
+                                fout.write(inci.toCSV())
 
     def removeTag(self, linea):
-        return linea.split('>')[1].split('<')[0]
-
+        return linea.split('>')[1].split('<')[0].replace('\n', '')
 
 p = Parser("data/inc2006.xml", "out/inc2006.csv")
 p.parse()
+print ("Numero de elementos: ", p.n_elements)

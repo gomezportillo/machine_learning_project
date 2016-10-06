@@ -15,5 +15,24 @@ class Incidencia():
         self.longitud = longitud
         self.latitud = latitud
 
+    def toCSV(self):
+        return self.tipo+";"+self.autonomia+";"+self.provincia+";"+self.matricula+";"+self.causa+";"+self.poblacion+";"+self.fecha+";"+self.nivel+";"+self.pk_ini+";"+self.pk_fin+";"+self.sentido+";"+self.nombre+";"+self.longitud+";"+self.latitud+"\n"
+
     def toString(self):
-        return self.tipo + " " + self.autonomia + " " + self.provincia
+        return self.tipo + " " + self.provincia
+
+    def printAll(self):
+        print self.tipo
+        print self.autonomia
+        print self.provincia
+        print self.matricula
+        print self.causa
+        print self.poblacion
+        print self.fecha
+        print self.nivel
+        print self.pk_ini
+        print self.pk_fin
+        print self.sentido
+        print self.nombre
+        print self.longitud
+        print self.latitud
