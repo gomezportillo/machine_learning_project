@@ -4,6 +4,7 @@
 Created on Sun Oct 16 16:58:09 2016
 
 @author: MontoroMontarroso
+@author: Pedro Manuel Gómez-Portillo
 """
 
 import csv
@@ -31,6 +32,8 @@ with open ('inc2006filt.csv','r') as f:
         cadena = linea.split(";")
         data=[cadena[2],cadena[12]]
         X.append(data)
+        
+
 
 miX = []
 miY=[]
@@ -41,5 +44,43 @@ for e in X:
 plt.scatter(miX, miY)
 plt.show()
 
+
+
 dist = sklearn.neighbors.DistanceMetric.get_metric('euclidean')
-matsim = dist.pairwise(data)
+matsim = dist.pairwise(X)    
+
+minPts=3
+from sklearn.neighbors import kneighbors_graph
+A = kneighbors_graph(X, minPts, include_self=False)
+Ar = A.toarray()
+
+seq = []
+for i,s in enumerate(X):
+    for j in range(len(X)):
+        if Ar[i][j] != 0:
+            seq.append(matsim[i][j])
+            
+seq.sort()
+plt.plot(seq)
+plt.show()
+
+import sklearn.cluster
+labels = sklearn.cluster.DBSCAN(eps=0.0075, min_samples=minPts).fit_predict(X)
+
+# 3. Plot the results
+plotdata(X,labels, 'dbscan')
+
+# 4. Validation
+from sklearn import metrics
+print("Silhouette Coefficient: %0.3f"
+      % metrics.silhouette_score(np.asarray(X), labels))
+
+ 
+
+ 
+
+
+
+
+            
+    
