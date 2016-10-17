@@ -12,12 +12,10 @@ import sklearn.neighbors
 import numpy
 import sklearn.cluster
 
-
-
 #Filtering inc2006.csv by accidents
 def filter():
-    with open('inc2006.csv', 'r') as f_in:
-        with open('inc2006filt.csv', 'w') as f_out:
+    with open('data/inc2006.csv', 'r') as f_in:
+        with open('data/inc2006filt.csv', 'w') as f_out:
             lines = f_in.readlines()
             for i in range(len(lines)):
                 if "Accidente" in lines[i]:
@@ -35,7 +33,7 @@ def plotdata(data,labels,name):
 
 #Creating file only with latitude and longitude
 X = []
-with open ('inc2006filt.csv','r') as file_filter:
+with open ('data/inc2006filt.csv','r') as file_filter:
     for line in file_filter:
         cadena = line.split(";")
         data=[cadena[2],cadena[12]]
