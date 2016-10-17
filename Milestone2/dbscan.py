@@ -24,6 +24,14 @@ def filtro():
                     csvout.write(lineas[i])
 filtro()
 
+def plotdata(data,labels,name): #def function plotdata
+#colors = ['black']
+    fig, ax = plt.subplots()
+    plt.scatter([row[0] for row in data], [row[1] for row in data], c=labels)
+    ax.grid(True)
+    fig.tight_layout()
+    plt.title(name)
+    plt.show()
 
 #Filtramos por latitud y longitud
 X = []
