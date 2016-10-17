@@ -31,17 +31,15 @@ with open ('inc2006filt.csv','r') as f:
         cadena = linea.split(";")
         data=[cadena[2],cadena[12]]
         X.append(data)
-        print (data)
 
-plt.scatter(X[0],X[1])
+miX = []
+miY=[]
+for e in X:
+    miX.append(e[0])
+    miY.append(e[1])
+
+plt.scatter(miX, miY)
 plt.show()
 
 dist = sklearn.neighbors.DistanceMetric.get_metric('euclidean')
 matsim = dist.pairwise(data)
-    
-
-
-
-
-            
-    
