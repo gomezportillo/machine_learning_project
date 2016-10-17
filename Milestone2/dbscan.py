@@ -10,6 +10,7 @@ import csv
 import matplotlib.pyplot as plt
 import sklearn.neighbors
 import numpy as np
+from sklearn.cluster import DBSCAN
 
 
 #Filtra inc2006.csv por accidentes
@@ -23,17 +24,20 @@ def filtro():
 filtro()
 
 
-
+#Filtramos por latitud y longitud
 X = []
-inc = [[0,], [0,]]
-fields = ["latitud","longitud"]
-
 with open ('inc2006filt.csv','r') as f:
-    
-    
+    for linea in f:
+        cadena = linea.split(";")
+        data=[cadena[2],cadena[12]]
+        X.append(data)
+        print (data)
 
+plt.scatter(X[0],X[1])
+plt.show()
 
-        
+dist = sklearn.neighbors.DistanceMetric.get_metric('euclidean')
+matsim = dist.pairwise(data)
     
 
 
