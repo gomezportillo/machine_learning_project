@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import sklearn.neighbors
 import numpy
 import sklearn.cluster
+from sklearn import metrics
 
 #Filtering inc2006.csv by accidents
 def filter():
@@ -54,6 +55,7 @@ dist = sklearn.neighbors.DistanceMetric.get_metric('euclidean')
 matsim = dist.pairwise(X)
 
 minPts=5
+"""
 A = sklearn.neighbors.kneighbors_graph(X, minPts, include_self=False)
 Ar = A.toarray()
 
@@ -66,14 +68,15 @@ for i,s in enumerate(X):
 seq.sort()
 plt.plot(seq)
 plt.show()
-
+"""
 #plotting the clusters
 labels = sklearn.cluster.DBSCAN(eps=0.0075, min_samples=minPts).fit_predict(X)
 
 # 3. Plot the results
 plotdata(X,labels, 'dbscan')
 
+print(len(set(labels)) - (1 if -1 in labels else 0))
+
 # 4. Validation
-from sklearn import metrics
 print("Silhouette Coefficient: %0.3f"
       % metrics.silhouette_score(numpy.asarray(X), labels))
