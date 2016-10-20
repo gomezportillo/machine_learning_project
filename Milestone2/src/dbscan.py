@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Sun Oct 16 16:58:09 2016
-
 @author: Andrés Montoro Montarroso
 @author: Pedro Manuel Gómez-Portillo
 """
@@ -75,7 +73,7 @@ labels = sklearn.cluster.DBSCAN(eps=0.0075, min_samples=minPts).fit_predict(X)
 # 3. Plot the results
 plotdata(X,labels, 'dbscan')
 
-print(len(set(labels)) - (1 if -1 in labels else 0))
+print("Number of clusters: {}".format(len(set(labels)) - (1 if -1 in labels else 0)))
 
 # 4. Validation
 print("Silhouette Coefficient: %0.3f"
