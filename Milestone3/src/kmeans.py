@@ -62,7 +62,7 @@ X = calculate_X()
 #calculate_best_k(X)
 
 #By the graphs we have conclude that the best number of clusters is k = 90
-number_clusters = 90
+number_clusters = 1
 #Now we will be using the spectral algorithm to cluster the data
 
 from sklearn import cluster, datasets
@@ -80,11 +80,13 @@ else:
     labels = spectral.predict(X)
 
 # plot
-plt.subplot(4, 1, plot_num)
+colors = numpy.array([x for x in 'bgrcmykbgrcmykbgrcmykbgrcmyk'])
+colors = numpy.hstack([colors] * 20)
+
+plt.subplot(4, 1, 1)
 plt.scatter(X[:, 0], X[:, 1], color=colors[labels].tolist(), s=10)
 
 plt.xlim(-2, 2)
 plt.ylim(-2, 2)
 plt.xticks(())
 plt.yticks(())
-plot_num += 1
