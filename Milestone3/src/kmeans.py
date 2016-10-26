@@ -4,10 +4,11 @@
 @author: Andrés Montoro Montarroso
 @author: Pedro Manuel Gómez-Portillo
 """
-from sklearn.cluster import KMeans
-from sklearn import metrics
+
 import numpy
 import matplotlib.pyplot as plt
+from sklearn import cluster, datasets, metrics
+from sklearn.preprocessing import StandardScaler
 
 def calculate_X():
     X = []
@@ -40,7 +41,7 @@ def calculate_best_k(X):
     silhouettes = []
 
     for i in range(70, 110, 10):
-        km = KMeans(i, init, n_init = iterations ,max_iter= max_iter, tol = tol,random_state = random_state)
+        km = cluster.KMeans(i, init, n_init = iterations ,max_iter= max_iter, tol = tol,random_state = random_state)
         labels = km.fit_predict(X)
         distortions.append(km.inertia_)
         silhouettes.append(metrics.silhouette_score(numpy.asarray(X), labels)) #aquí se nota la potencia computacional
@@ -61,19 +62,19 @@ def calculate_best_k(X):
 X = calculate_X()
 #calculate_best_k(X)
 
-#By the graphs we have conclude that the best number of clusters is k = 90
-number_clusters = 5
-#Now we will be using the spectral algorithm to cluster the data
-
-from sklearn import cluster, datasets
-from sklearn.preprocessing import StandardScaler
+# By both the distorision and the silohouette graphs we have conclude that
+# the best number of clusters is k = 80
+number_clusters = 80
+# Now we will be using the spectral algorithm to cluster the data
 
 X = StandardScaler().fit_transform(X)
 
 # estimate bandwidth for mean shift
 spectral = cluster.SpectralClustering(n_clusters=number_clusters, eigen_solver='arpack', affinity="nearest_neighbors")
+
 # predict cluster memberships
 spectral.fit(X)
+
 if hasattr(spectral, 'labels_'):
     labels = spectral.labels_.astype(numpy.int)
 else:
@@ -89,5 +90,10 @@ plt.xlim(-2, 2)
 plt.ylim(-2, 2)
 plt.xticks(())
 plt.yticks(())
+
+msg = "Spectral algorithm, number of clusters "+ str(number_clusters) + \
+        "\nSilhouette Coefficient: %0.3f" % metrics.silhouette_score(numpy.asarray(X), labels)
+
+plt.xlabel(msg)
 
 plt.show()

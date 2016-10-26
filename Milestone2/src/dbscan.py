@@ -22,7 +22,7 @@ def filter():
 filter()
 
 #Plottering data by clusters
-def plotdata(data,labels,name):
+def plotdata(data, labels, name):
     fig, ax = plt.subplots()
     plt.scatter([row[0] for row in data], [row[1] for row in data], c=labels)
     ax.grid(True)

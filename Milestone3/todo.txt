@@ -1,4 +1,0 @@
-aplicar k-means --> ver que k es mejor
-
-k = raiz(# accidentes) +- 10
-ver con que k tenemos mejor resultados
