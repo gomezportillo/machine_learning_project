@@ -10,7 +10,7 @@ Tasks to achieve:
     * Number of accidents per town
     * Number of accidents per reason
     * Number of accidents per traffic level
-    * Number of accidents in winter (22 diciembre - 21 marzo)
+    * Number of accidents in winter (enero2006 - 21 marzo2006 && 22 diembre2006 - 31dic2006)
     * Number of accidents in summer (20 junio - 23 septiembre)
     * Number of accidents from 8.00am to 15.00pm
     * Number of accidents from 15.00pm to 20.00pm
@@ -34,7 +34,7 @@ longitud = 12
 poblacion = 13
 zona = 14
 
-dic_town = {}
+dict_town = {}
 dict_reason = {}
 dict_traffic_level = {}
 acc_winter = 0
@@ -44,22 +44,49 @@ acc_15_20 = 0
 acc_20_3 = 0
 
 lines = []
+
+def calculate_poblacion(current_zona, current_poblacion):
+    if current_poblacion != '':
+        try:
+            dict_town[current_poblacion, current_zona] += 1
+        except KeyError:
+            dict_town[current_poblacion, current_zona] = 1
+
+def calculate_reason(current_zona, current_causa):
+    if current_causa != '':
+        try:
+            dict_reason[current_causa, current_zona] += 1
+        except KeyError:
+            dict_reason[current_causa, current_zona] = 1
+
+
 with open('data/inc2006zone.csv') as f_in:
     for line in f_in:
         lines.append(line.split(";"))
 
 for i in xrange(len(lines)):
     current_zona = int(lines[i][zona].replace("\n", ""))
-
     current_poblacion = lines[i][poblacion]
-    if current_poblacion != '':
-        try:
-            dic_town[current_poblacion, current_zona] += 1
-        except KeyError:
-            dic_town[current_poblacion, current_zona] = 1
+    current_causa = lines[i][causa]
+    current_traffic_level = lines[i][nivel]
 
-abc = {}
-for i in xrange(len(dic_town.keys())):
-    abc[dic_town.keys()[i][0]] = 1
+    calculate_poblacion(current_zona, current_poblacion)
+    calculate_reason(current_zona, current_causa)
+    calculate_traffic_level(current_zona, current_traffic_level) #<- por hacer!
 
-print abc.keys()
+all_towns = {}
+for i in xrange(len(dict_town.keys())):
+    all_towns[dict_town.keys()[i][0]] = 1
+
+all_reasons = {}
+for i in xrange(len(dict_reason.keys())):
+    all_reasons[dict_reason.keys()[i][0]] = 1
+
+all_traffic_level = {}
+for i in xrange(len(dict_traffic_level.keys())):
+    all_traffic_level[dict_traffic_level.keys()[i][0]] = 1
+
+
+print all_reasons.keys()
+print all_towns.keys()
+print all_traffic_level.keys()
