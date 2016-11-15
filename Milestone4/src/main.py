@@ -48,18 +48,6 @@ with open('data/inc2006zone.csv') as f_in:
     for line in f_in:
         lines.append(line.split(";"))
 
-prueba = {}
-repetidos = 0
-with open('data/inc2006zone.csv') as f_in:
-    for line in f_in:
-        try:
-            prueba[line] += 1
-            repetidos += 1
-        except KeyError:
-            prueba[line] = 1
-
-print repetidos
-
 for i in xrange(len(lines)):
     current_zona = int(lines[i][zona].replace("\n", ""))
 
@@ -70,5 +58,8 @@ for i in xrange(len(lines)):
         except KeyError:
             dic_town[current_poblacion, current_zona] = 1
 
-# for i in range(len(dic_town)):
-    # print "{} {}".format(dic_town.keys()[i], dic_town.values()[i])
+abc = {}
+for i in xrange(len(dic_town.keys())):
+    abc[dic_town.keys()[i][0]] = 1
+
+print abc.keys()
