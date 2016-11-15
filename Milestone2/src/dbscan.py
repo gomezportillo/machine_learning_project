@@ -69,7 +69,7 @@ plt.show()
 """
 #plotting the clusters
 labels = sklearn.cluster.DBSCAN(eps=0.0075, min_samples=minPts).fit_predict(X)
-
+	
 # 3. Plot the results
 plotdata(X,labels, 'dbscan')
 

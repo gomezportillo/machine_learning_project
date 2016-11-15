@@ -22,5 +22,6 @@ with open('data/inc2006.csv') as fin:
     with open('data/inc2006zone.csv', 'w') as fout:
         lines = fin.readlines()
         for i in xrange(len(lines)):
-            nl = str(lines[i].replace("\n", "")) + ";" + str(labels[i]) + "\n"
-            fout.write(nl)
+            if labels[i] != -1: #In that way we get ride of the noise
+                nl = str(lines[i].replace("\n", "")) + ";" + str(labels[i]) + "\n"
+                fout.write(nl)
