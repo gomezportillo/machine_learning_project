@@ -7,7 +7,7 @@ DIROUT := out/
 
 gen_features:
 	$(PYTHON_VER) $(DIRSRC)calculate_zones.py
-	$(PYTHON_VER) $(DIRSRC)generate_feature.py
+	$(PYTHON_VER) $(DIRSRC)generate_features.py
 
 pca: gen_features
 	$(PYTHON_VER) $(DIRSRC)pca.py
