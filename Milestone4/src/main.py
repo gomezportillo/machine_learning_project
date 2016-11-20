@@ -99,7 +99,7 @@ with open('data/inc2006zone.csv') as f_in:
     for line in f_in:
         lines.append(line.split(";"))
 
-for i in xrange(len(lines)):
+for i in range(len(lines)):
     current_zona = int(lines[i][zona].replace("\n", ""))
     current_poblacion = lines[i][poblacion]
     current_causa = lines[i][causa]
@@ -112,33 +112,33 @@ for i in xrange(len(lines)):
     calculate_accidents_by_hour(current_zona, current_date)
 
 all_reasons = {}
-for i in xrange(len(dic_reason.keys())):
-    all_reasons[dic_reason.keys()[i][0]] = 1
+for i in range(len(dic_reason.keys())):
+    all_reasons[list(dic_reason.keys())[i][0]] = 1
 
 all_traffic_level = {}
-for i in xrange(len(dic_traffic_level.keys())):
-    all_traffic_level[dic_traffic_level.keys()[i][0]] = 1
+for i in range(len(dic_traffic_level.keys())):
+    all_traffic_level[list(dic_traffic_level.keys())[i][0]] = 1
 
 all_colums = []
 
-for r in all_reasons.keys():
-    all_colums.append(r)
+#for r in all_reasons.keys():
+#    all_colums.append(r)
 
-for t in all_traffic_level.keys():
-    all_colums.append(t)
+#for t in all_traffic_level.keys():
+#    all_colums.append(t)
 
-all_colums.append("Winter accidents")
-all_colums.append("Summer accidents")
-all_colums.append("8-15 accidents")
-all_colums.append("15-20 accidents")
-all_colums.append("20-3 accidents")
+#all_colums.append("Winter accidents")
+#all_colums.append("Summer accidents")
+#all_colums.append("8-15 accidents")
+#all_colums.append("15-20 accidents")
+#all_colums.append("20-3 accidents")
 
-print all_colums
+#print (all_colums)
 
 line = ""
 with open('out/my_data.csv', 'w') as f_out:
     f_out.write(str(all_colums) + "\n")
-    for zone in xrange(158):
+    for zone in range(158):
         try:
             line = str(dic_reason['Alcance', zone]) + ";"
         except KeyError:
