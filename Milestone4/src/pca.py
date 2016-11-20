@@ -13,12 +13,20 @@ from sklearn import preprocessing
 import sklearn.cluster
 
 #Load data
-def load_data():
-	with open ('out/my_data.csv','r') as file_filter:
-		for line in file_filter:
+data=[]
+count = 0 
+with open ('out/my_data.csv','r') as file_filter:
+	for line in file_filter:
+		if count > 0: 
+			row=line.split(";")
+			row.pop(0)
+			if row != []:
+				data.append(map(float, row))
+		count += 1
+
 		
 #Normalization of the data
-
 min_max_scaler = preprocessing.MinMaxScaler()
-features = min_max_scaler.fit_transform(features)
-print (states)
+data = min_max_scaler.fit_transform(data)
+print (data)
+

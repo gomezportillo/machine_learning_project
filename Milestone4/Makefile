@@ -1,4 +1,4 @@
 all: exec
 
 exec:
-	python src/main.py
+	python src/pca.py

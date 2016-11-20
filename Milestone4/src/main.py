@@ -119,25 +119,9 @@ all_traffic_level = {}
 for i in range(len(dic_traffic_level.keys())):
     all_traffic_level[list(dic_traffic_level.keys())[i][0]] = 1
 
-all_colums = []
-
-#for r in all_reasons.keys():
-#    all_colums.append(r)
-
-#for t in all_traffic_level.keys():
-#    all_colums.append(t)
-
-#all_colums.append("Winter accidents")
-#all_colums.append("Summer accidents")
-#all_colums.append("8-15 accidents")
-#all_colums.append("15-20 accidents")
-#all_colums.append("20-3 accidents")
-
-#print (all_colums)
 
 line = ""
 with open('out/my_data.csv', 'w') as f_out:
-    f_out.write(str(all_colums) + "\n")
     for zone in range(158):
         try:
             line = str(dic_reason['Alcance', zone]) + ";"
@@ -205,8 +189,8 @@ with open('out/my_data.csv', 'w') as f_out:
             line += "0;"
 
         try:
-                line += str(dic_20_3_accidents[zone])
+            line += str(dic_20_3_accidents[zone])
         except KeyError:
-            line += "0;"
+            line += "0"
 
         f_out.write(line + "\n")
