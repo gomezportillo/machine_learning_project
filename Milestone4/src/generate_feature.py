@@ -121,7 +121,7 @@ for i in range(len(dic_traffic_level.keys())):
 
 
 line = ""
-with open('out/my_data.csv', 'w') as f_out:
+with open('out/inc2006features.csv', 'w') as f_out:
     for zone in range(158):
         try:
             line = str(dic_reason['Alcance', zone]) + ";"
