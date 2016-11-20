@@ -1,4 +1,4 @@
 all: exec
 
 exec:
-	python src/pca.py
+	python src/hierarchical.py

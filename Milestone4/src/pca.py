@@ -21,12 +21,21 @@ with open ('out/my_data.csv','r') as file_filter:
 			row=line.split(";")
 			row.pop(0)
 			if row != []:
-				data.append(map(float, row))
+				data.append(list(map(float, row)))
 		count += 1
 
 		
 #Normalization of the data
 min_max_scaler = preprocessing.MinMaxScaler()
-data = min_max_scaler.fit_transform(data)
+data = min_max_scaler.fit_transform(numpy.asarray(data))
 print (data)
+
+#PCA Estimation
+estimator = PCA (n_components = 2)
+X_pca = estimator.fit_transform(data)
+
+#Plot
+plt.scatter([x[0] for x in X_pca], [x[1] for x in X_pca])
+plt.show()
+
 
