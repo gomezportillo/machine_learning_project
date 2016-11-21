@@ -22,7 +22,7 @@ nl = ""
 with open('data/inc2006.csv') as fin:
     with open('data/inc2006zone_tmp.csv', 'w') as fout:
         lines = fin.readlines()
-        for i in xrange(len(lines)):
+        for i in range(len(lines)):
             if labels[i] != -1: #In that way we get ride of the noise values
                 nl = str(lines[i].replace("\n", "")) + ";" + str(labels[i]) + "\n"
                 fout.write(nl)
@@ -41,4 +41,4 @@ with open('data/inc2006zone_tmp.csv') as f_in:
                 f_out.write(line)
 
 os.remove('data/inc2006zone_tmp.csv')
-print "Number of repeated elements: ", n_repeated
+print ("Number of repeated elements: ", n_repeated)
