@@ -15,16 +15,12 @@ from scipy import cluster
 
 #Load data
 data=[]
-count = 0
 with open ('out/inc2006features.csv', 'r') as file_filter:
 	for line in file_filter:
-		if count > 0:
-			row=line.split(";")
-			row.pop(0)
-			if row != []:
-				data.append(list(map(float, row)))
-		count += 1
-
+		row=line.split(";")
+		row.pop(0)
+		if row != []:
+			data.append(list(map(float, row)))
 
 #Normalization of the data
 min_max_scaler = preprocessing.MinMaxScaler()
@@ -51,7 +47,6 @@ for i in range(len(X_pca)):
 plt.show()
 
 
-
 #Compute the similarity matrix
 dist = sklearn.neighbors.DistanceMetric.get_metric('euclidean')
 matsim = dist.pairwise(X_pca)
@@ -66,22 +61,23 @@ plt.show()
 #Cutting the dendrogram
 cut = 19.5
 clusters = cluster.hierarchy.fcluster(clusters, cut, criterion='distance')
-labels = list(set(clusters))
+labels = set(clusters)
 print ('Clusters number %d' % (len(labels) + 1))
 
 #Characterize the obtained groups
+zones = ['Low risk','Medium risk','High risk']
 
-#zones = ['Low risk','Medium risk','High risk']
+lines = open("out/inc2006features.csv").readlines()
+
+acc_per_zone = []
+
+for i in xrange(len(lines)):
+	zone = clusters[i]
+	number_accidents = sum(map(int, lines[i].split(";")))
+	acc_per_zone.append((zone, number_accidents))
+	print number_accidents
+
+print
+
 #features = ['Alcance','Atropello','Vuelco','Tijera_camion','Salida','Rojo','Amarillo',
 			#'Negro','Blanco','Invierno','Verano','8am_15pm','15pm_20pm','20pm_3am']
-
-
-	
-
-
-
-
-
-
-
-
