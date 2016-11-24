@@ -105,16 +105,16 @@ with open(fout_name, 'w') as f_out:
 		if index == 0:
 			f_out.write('1;{};{}\n'.format(number, mean_cluster_1))
 		else:
-			f_out.write('1;{}\n'.format(number))
+			f_out.write('1;{};\n'.format(number))
 
 	for index, number in enumerate(cluster_2):
 		if index == 0:
 			f_out.write('2;{};{}\n'.format(number, mean_cluster_2))
 		else:
-			f_out.write('2;{}\n'.format(number))
+			f_out.write('2;{};\n'.format(number))
 
 	for index, number in enumerate(cluster_3):
 		if index == 0:
 			f_out.write('3;{};{}\n'.format(number, mean_cluster_3))
 		else:
-			f_out.write('3;{}\n'.format(number))
+			f_out.write('3;{};\n'.format(number))
