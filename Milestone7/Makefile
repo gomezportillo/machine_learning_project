@@ -10,3 +10,7 @@ main:
 
 clean:
 	$(RM) $(DIROUT)*
+
+install:
+	pip install graphviz
+	sudo apt-get install python-pydot
