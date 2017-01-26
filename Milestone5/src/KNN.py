@@ -3,8 +3,6 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 from sklearn import neighbors
 
-
-
 def training():
 	n_train = 150
 	validation_error= [0] * 151
@@ -30,30 +28,30 @@ def training():
 				data_zone2=[chain2[2].replace("\n", "")]
 				latlon2.append(data_latlon2)
 				zone2.append(data_zone2)
-	
+
 	for n_neighbors in range(1,151):
 		clf = neighbors.KNeighborsClassifier(n_neighbors, weights='distance')
-		clf.fit(latlon1,zone1)
+		clf.fit(latlon1, zone1)
 		Z = clf.predict(latlon2)
 		aux = 0
 		for i in range(len(zone2)):
 			if(zone2[i] != Z[i]):
 				aux += 1
 
-		error = aux/ len(zone2) 
+		error = aux/ len(zone2)
 
 		validation_error[n_neighbors] += error
 		temp = list(map(lambda x : x / n_train, validation_error))
 		validation_error=temp
-		
-	
+
+
 	plt.title('Selection of best K (distance)')
 	plt.ylabel('Error')
 	plt.xlabel('K')
 	plt.xlim(1, 200)
 	plt.ylim(-0.002,0.002)
-	plt.plot(validation_error)
-	plt.show()
+	# plt.plot(validation_error)
+	# plt.show()
 
 	K = len(validation_error) - list(reversed(validation_error)).index(min(validation_error[1:])) - 1
 	print ('Best K is: %d' % K)
@@ -64,7 +62,7 @@ def training():
 	zone = []
 
 	with open('out/zones.csv', 'r') as latlonzon:
-		
+
 		for aux in latlonzon:
 			cad = aux.split(";")
 			latitudeAux = [cad[0]]
@@ -82,24 +80,33 @@ def training():
 	clf = neighbors.KNeighborsClassifier(K, weights='distance')
 	clf.fit(latitude_longitude,zone)
 
-	latitude_min, latitude_max = latitude.min() - 0.01, latitude.max() + 0.01
-	longitude_min, longitude_max = longitude.min() - 0.01, longitude.max() + 0.01
+	latitude_min = float(min(min(latitude))) - 0.01
+	latitude_max = float(max(max(latitude))) + 0.01
 
-	latCoor, lonCoor = np.meshgrid(np.arange(latitude_min,latitude_max,0.02),np.arange(longitude_min,longitude_min,0.02))
+	longitude_min = float(min(min(longitude))) - 0.01
+	longitude_max = float(max(max(longitude))) + 0.01
+
+	np_arrange_lat = np.arange(latitude_min, latitude_max, 0.02)
+	np_arrange_lon = np.arange(longitude_max, longitude_min, 0.02)
+
+	latCoor, lonCoor = np.meshgrid(np_arrange_lat, np_arrange_lon)
 
 	Z = clf.predict(np.c_[latCoor.ravel(),lonCoor.ravel()])
 	Z = Z.reshape(latCoor.shape)
 
+	flat_latCoor = [item for sublist in latCoor for item in sublist]
+	flat_lonCoor = [item for sublist in lonCoor for item in sublist]
+	
 	plt.figure()
-	plt.pcolormesh(latCoor, lonCoor, Z, cmap=cmap_bold)
-	plt.scatter(latitude,latitude, c=zone, cmap=cmap_bold)
-	plt.xlim(latitude.min(), latitude.max())
-	plt.ylim(longitude.min(), longitude.max())
+	plt.pcolormesh(flat_latCoor, flat_lonCoor, Z, cmap=cmap_bold)
+	plt.scatter(latitude, latitude, c=zone, cmap=cmap_bold)
+	plt.xlim(latitude_min, latitude_max)
+	plt.ylim(longitude_min, longitude_max)
 	plt.title("Classification zone where k = %d, weights = 'distance'" %(2))
 	plt.show()
 
 
-	latlonWorks = [] 
+	latlonWorks = []
 	with open('out/works_normalised.csv') as works_in:
 		with open('out/works_zones.csv','w') as works_out:
 
@@ -115,7 +122,3 @@ def training():
 
 
 training()
-
-   
-
-
