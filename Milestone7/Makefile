@@ -6,7 +6,7 @@ DIRSRC := src/
 DIROUT := out/
 
 main:
-	$(PYTHON_VER) $(DIRSRC)KNN.py
+	$(PYTHON_VER) $(DIRSRC)decision_tree.py
 
 clean:
 	$(RM) $(DIROUT)*
