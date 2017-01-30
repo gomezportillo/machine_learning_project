@@ -50,8 +50,8 @@ def training():
 	plt.xlabel('K')
 	plt.xlim(1, 200)
 	plt.ylim(-0.002,0.002)
-	# plt.plot(validation_error)
-	# plt.show()
+	plt.plot(validation_error)
+	plt.show()
 
 	K = len(validation_error) - list(reversed(validation_error)).index(min(validation_error[1:])) - 1
 	print ('Best K is: %d' % K)
@@ -97,13 +97,13 @@ def training():
 	Z = Z.reshape(latCoor.shape)
 
 
-	# plt.figure()
-	# plt.pcolormesh(latCoor, lonCoor, Z, cmap = cmap)
-	# plt.scatter(latitude, longitude, c = zone, cmap = cmap)
-	# plt.xlim(latitude_min, latitude_max)
-	# plt.ylim(longitude_min, longitude_max)
-	# plt.title("Classification zone where k = %d, weights = 'distance'" %(K))
-	# plt.show()
+	plt.figure()
+	plt.pcolormesh(latCoor, lonCoor, Z, cmap = cmap)
+	plt.scatter(latitude, longitude, c = zone, cmap = cmap)
+	plt.xlim(latitude_min, latitude_max)
+	plt.ylim(longitude_min, longitude_max)
+	plt.title("Classification zone where k = %d, weights = 'distance'" %(K))
+	plt.show()
 
 
 	latitudes = list()
