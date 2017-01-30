@@ -94,11 +94,11 @@ def training():
 	Z = clf.predict(np.c_[latCoor.ravel(),lonCoor.ravel()])
 	Z = Z.reshape(latCoor.shape)
 
-	flat_latCoor = [item for sublist in latCoor for item in sublist] #list of lists to list
-	flat_lonCoor = [item for sublist in lonCoor for item in sublist]
+	# flat_latCoor = [item for sublist in latCoor for item in sublist] #list of lists to list
+	# flat_lonCoor = [item for sublist in lonCoor for item in sublist]
 
 	plt.figure()
-	plt.pcolormesh(flat_latCoor, flat_lonCoor, Z, cmap=cmap)
+	plt.pcolormesh(latCoor, lonCoor, Z, cmap=cmap)
 	plt.scatter(latitude, latitude, c=zone, cmap=cmap)
 	plt.xlim(latitude_min, latitude_max)
 	plt.ylim(longitude_min, longitude_max)
