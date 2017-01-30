@@ -124,7 +124,7 @@ def training():
 		with open('out/works_zones.csv','w') as works_out:
 
 			counter = 0
-			works_out.write("Latitude;Longitude;Z\n")
+			works_out.write("Latitude;Longitude;Zone\n")
 			for line in works_in:
 				line_out = line[:-1] + ';' + Z_vector[counter] + "\n"
 				works_out.write(line_out)
