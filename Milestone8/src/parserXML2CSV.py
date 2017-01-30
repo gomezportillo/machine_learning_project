@@ -42,7 +42,7 @@ class Parser():
         return linea.split('>')[1].split('<')[0].replace('\n', '')
 
 file_in = "data/datos2007_pretty.xml"
-file_out = "out/datos2007.csv"
+file_out = "data/datos2007.csv"
 p = Parser(file_in, file_out)
 p.parse()
 print ("Numero de elementos: ", p.n_incidencias_gipuzkoa)
