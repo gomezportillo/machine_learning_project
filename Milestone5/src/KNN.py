@@ -118,13 +118,16 @@ def training():
 	clf_works.fit(latitude_longitude, zone)
 	Z = clf_works.predict(np.c_[latitudes, longitudes])
 
-	with open('out/works_normalised.csv') as works_in:
+	Z_vector = [x for x in Z]
+
+	with open('out/works_normalised.csv', 'r') as works_in:
 		with open('out/works_zones.csv','w') as works_out:
 
+			counter = 0
+			works_out.write("Latitude;Longitude;Z\n")
 			for line in works_in:
-				split_line=line.split(";")
-				auxWorks = (split_line[0],split_line[1])
-				works_out.write(Z + "\n")
-
+				line_out = line[:-1] + ';' + Z_vector[counter] + "\n"
+				works_out.write(line_out)
+				counter += 1
 
 training()
