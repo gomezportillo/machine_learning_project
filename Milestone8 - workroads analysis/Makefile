@@ -4,9 +4,11 @@ PYTHON_VER := python
 
 DIRSRC := src/
 DIROUT := out/
+FILENAME := decision_tree
 
 decision_tree:
 	$(PYTHON_VER) $(DIRSRC)decision_tree.py
+	convert $(DIROUT)$(FILENAME).pdf $(DIROUT)$(FILENAME).png
 
 hierarchical:
 	$(PYTHON_VER) $(DIRSRC)hierarchical.py
