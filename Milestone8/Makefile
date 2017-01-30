@@ -5,6 +5,9 @@ PYTHON_VER := python
 DIRSRC := src/
 DIROUT := out/
 
+gen_features:
+	$(PYTHON_VER) $(DIRSRC)generate_features.py
+
 knn:
 	$(PYTHON_VER) $(DIRSRC)knn.py
 
@@ -18,6 +21,6 @@ pretty_xml:
 	python3 $(DIRSRC)prettyXML.py #python3 as it solves natively codification issues
 
 clean:
-	$(RM) $(DIROUT)*
+	$(RM) $(DIRSRC)*.pyc
 
-full: pretty_xml parse filter knn
+full: pretty_xml parse filter knn gen_features

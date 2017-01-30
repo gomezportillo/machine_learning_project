@@ -97,4 +97,13 @@ def training():
 				works_out.write(line_out)
 				counter += 1
 
+	# Generar un CSV con los datos de 2007 + las zonas calculadas en el knn
+	with open('data/datos2007filt.csv', 'r') as works_in:
+	    with open('data/datos2007filt_with_zones.csv','w') as works_out:
+	        counter = 0
+	        for line in works_in:
+	            line_out = line[:-1] + ';' + Z_vector[counter] + "\n"
+	            works_out.write(line_out)
+	            counter += 1
+
 training()
