@@ -60,15 +60,30 @@ def training():
 	latitudes = list()
 	longitudes = list()
 	latitude_longitude = list()
+	zone = list()
+
+	with open('data/2006/zones.csv', 'r') as latlonzon:
+		for aux in latlonzon:
+			cad = aux.split(";")
+			latitudeAux = [cad[0]]
+			longitudeAux = [cad[1]]
+			latitude_longitudeAux = [cad[0],cad[1]]
+			zoneAux = [cad[2].replace("\n", "")]
+			latitudes.append(latitudeAux)
+			longitudes.append(longitudeAux)
+			latitude_longitude.append(latitude_longitudeAux)
+			zone.append(zoneAux)
+
+	latitudes2 = list()
+	longitudes2 = list()
 	for line in open('out/datos2007_latlon.csv').readlines():
 		line_split = line.split(";")
-		latitudes.append(line_split[0])
-		longitudes.append(line_split[1])
-		latitude_longitude.append([line_split[0], line_split[1]])
+		latitudes2.append(line_split[0])
+		longitudes2.append(line_split[1])
 
 	clf_works = neighbors.KNeighborsClassifier(K, weights='distance')
 	clf_works.fit(latitude_longitude, zone)
-	Z = clf_works.predict(np.c_[latitudes, longitudes])
+	Z = clf_works.predict(np.c_[latitudes2, longitudes2])
 
 	Z_vector = [x for x in Z]
 
