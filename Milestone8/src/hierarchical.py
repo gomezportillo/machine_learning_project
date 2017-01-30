@@ -59,13 +59,13 @@ cluster.hierarchy.dendrogram(clusters, color_threshold=19.5)
 plt.show()
 
 #Cutting the dendrogram
-cut = 25
+cut = 19.5
 clusters = cluster.hierarchy.fcluster(clusters, cut, criterion='distance')
 labels = set(clusters)
 print ('Clusters number %d' % (len(labels) + 1))
 
 #Characterize the obtained groups
-zones = ['Low risk','Medium risk','High risk']
+zones = ['Low risk', 'Low/Mid risk', 'Medium risk','High risk']
 
 lines = open("out/datos2007_features.csv").readlines()
 
@@ -76,9 +76,10 @@ for i in range(len(lines)):
 	number_accidents = sum(map(int, lines[i].split(";")))
 	acc_per_zone.append((zone, number_accidents))
 
-cluster_1 = []
-cluster_2 = []
-cluster_3 = []
+cluster_1 = list()
+cluster_2 = list()
+cluster_3 = list()
+cluster_4 = list()
 
 for result in acc_per_zone:
 	zone = result[0]
@@ -90,10 +91,13 @@ for result in acc_per_zone:
 		cluster_2.append(n_accidents)
 	if zone == 3:
 		cluster_3.append(n_accidents)
+	if zone == 4:
+		cluster_4.append(n_accidents)
 
 mean_cluster_1 = sum(cluster_1)/len(cluster_1)
 mean_cluster_2 = sum(cluster_2)/len(cluster_2)
 mean_cluster_3 = sum(cluster_3)/len(cluster_3)
+mean_cluster_4 = sum(cluster_4)/len(cluster_4)
 
 fout_name = "out/datos2007acc_zone.csv"
 headers = "Cluster;Number of accidents;Mean\n"
@@ -118,3 +122,9 @@ with open(fout_name, 'w') as f_out:
 			f_out.write('3;{};{}\n'.format(number, mean_cluster_3))
 		else:
 			f_out.write('3;{};\n'.format(number))
+
+	for index, number in enumerate(cluster_4):
+		if index == 0:
+			f_out.write('4;{};{}\n'.format(number, mean_cluster_4))
+		else:
+			f_out.write('4;{};\n'.format(number))
