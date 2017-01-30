@@ -74,7 +74,7 @@ def training():
 			latitude_longitude.append(latitude_longitudeAux)
 			zone.append(zoneAux)
 
-	cmap_bold = ListedColormap(plt.cm.Paired(np.linspace(0, 1, len(np.unique(Z)))))
+	cmap = ListedColormap(plt.cm.Paired(np.linspace(0, 1, len(np.unique(Z)))))
 
 
 	clf = neighbors.KNeighborsClassifier(K, weights='distance')
@@ -86,8 +86,8 @@ def training():
 	longitude_min = float(min(min(longitude))) - 0.01
 	longitude_max = float(max(max(longitude))) + 0.01
 
-	np_arrange_lat = np.arange(latitude_min, latitude_max, 0.02)
-	np_arrange_lon = np.arange(longitude_max, longitude_min, 0.02)
+	np_arrange_lat = np.arange(latitude_min, latitude_max, 0.001)
+	np_arrange_lon = np.arange(longitude_max, longitude_min, 0.001)
 
 	latCoor, lonCoor = np.meshgrid(np_arrange_lat, np_arrange_lon)
 
@@ -97,13 +97,13 @@ def training():
 	flat_latCoor = [item for sublist in latCoor for item in sublist] #list of lists to list
 	flat_lonCoor = [item for sublist in lonCoor for item in sublist]
 
-	# plt.figure()
-	# plt.pcolormesh(flat_latCoor, flat_lonCoor, Z, cmap=cmap_bold)
-	# plt.scatter(latitude, latitude, c=zone, cmap=cmap_bold)
-	# plt.xlim(latitude_min, latitude_max)
-	# plt.ylim(longitude_min, longitude_max)
-	# plt.title("Classification zone where k = %d, weights = 'distance'" %(2))
-	# plt.show()
+	plt.figure()
+	plt.pcolormesh(flat_latCoor, flat_lonCoor, Z, cmap=cmap)
+	plt.scatter(latitude, latitude, c=zone, cmap=cmap)
+	plt.xlim(latitude_min, latitude_max)
+	plt.ylim(longitude_min, longitude_max)
+	plt.title("Classification zone where k = %d, weights = 'distance'" %(2))
+	plt.show()
 
 
 	latlonWorks = []
