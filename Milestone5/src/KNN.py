@@ -86,39 +86,45 @@ def training():
 	longitude_min = float(min(min(longitude))) - 0.01
 	longitude_max = float(max(max(longitude))) + 0.01
 
-	np_arrange_lat = np.arange(latitude_min, latitude_max, 0.001)
-	np_arrange_lon = np.arange(longitude_max, longitude_min, 0.001)
+	h = 1  # step size in the mesh
+
+	np_arrange_lat = np.arange(latitude_min, latitude_max, h)
+	np_arrange_lon = np.arange(longitude_max, longitude_min, h)
 
 	latCoor, lonCoor = np.meshgrid(np_arrange_lat, np_arrange_lon)
 
 	Z = clf.predict(np.c_[latCoor.ravel(),lonCoor.ravel()])
 	Z = Z.reshape(latCoor.shape)
 
-	# flat_latCoor = [item for sublist in latCoor for item in sublist] #list of lists to list
-	# flat_lonCoor = [item for sublist in lonCoor for item in sublist]
 
-	plt.figure()
-	plt.pcolormesh(latCoor, lonCoor, Z, cmap=cmap)
-	plt.scatter(latitude, latitude, c=zone, cmap=cmap)
-	plt.xlim(latitude_min, latitude_max)
-	plt.ylim(longitude_min, longitude_max)
-	plt.title("Classification zone where k = %d, weights = 'distance'" %(2))
-	plt.show()
+	# plt.figure()
+	# plt.pcolormesh(latCoor, lonCoor, Z, cmap = cmap)
+	# plt.scatter(latitude, longitude, c = zone, cmap = cmap)
+	# plt.xlim(latitude_min, latitude_max)
+	# plt.ylim(longitude_min, longitude_max)
+	# plt.title("Classification zone where k = %d, weights = 'distance'" %(K))
+	# plt.show()
 
 
-	latlonWorks = []
+	latitudes = list()
+	longitudes = list()
+	for line in open('out/works_normalised.csv').readlines():
+		line_split = line.split(";")
+		latitudes.append(line_split[0])
+		longitudes.append(line_split[1])
+
+
+	clf_works = neighbors.KNeighborsClassifier(K, weights='distance')
+	clf_works.fit(latitude_longitude, zone)
+	Z = clf_works.predict(np.c_[latitudes, longitudes])
+
 	with open('out/works_normalised.csv') as works_in:
 		with open('out/works_zones.csv','w') as works_out:
 
 			for line in works_in:
 				split_line=line.split(";")
 				auxWorks = (split_line[0],split_line[1])
-				clf = neighbors.KNeighborsClassifier(K, weights='distance')
-				clf.fit(latitude_longitude,zone)
-				Z = clf.predict(latlonWorks)
-
-				works_out.write(Z)
-
+				works_out.write(Z + "\n")
 
 
 training()
