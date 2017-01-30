@@ -5,6 +5,12 @@ PYTHON_VER := python
 DIRSRC := src/
 DIROUT := out/
 
+decision_tree:
+	$(PYTHON_VER) $(DIRSRC)decision_tree.py
+
+hierarchical:
+	$(PYTHON_VER) $(DIRSRC)hierarchical.py
+
 gen_features:
 	$(PYTHON_VER) $(DIRSRC)generate_features.py
 
@@ -23,4 +29,4 @@ pretty_xml:
 clean:
 	$(RM) $(DIRSRC)*.pyc
 
-full: pretty_xml parse filter knn gen_features
+full: pretty_xml parse filter knn gen_features hierarchical decision_tree

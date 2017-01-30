@@ -15,7 +15,7 @@ from scipy import cluster
 
 #Load data
 data=[]
-with open ('out/inc2006features.csv', 'r') as file_filter:
+with open ('out/datos2007_features.csv', 'r') as file_filter:
 	for line in file_filter:
 		row=line.split(";")
 		row.pop(0)
@@ -59,7 +59,7 @@ cluster.hierarchy.dendrogram(clusters, color_threshold=19.5)
 plt.show()
 
 #Cutting the dendrogram
-cut = 19.5
+cut = 25
 clusters = cluster.hierarchy.fcluster(clusters, cut, criterion='distance')
 labels = set(clusters)
 print ('Clusters number %d' % (len(labels) + 1))
@@ -67,7 +67,7 @@ print ('Clusters number %d' % (len(labels) + 1))
 #Characterize the obtained groups
 zones = ['Low risk','Medium risk','High risk']
 
-lines = open("out/inc2006features.csv").readlines()
+lines = open("out/datos2007_features.csv").readlines()
 
 acc_per_zone = []
 
@@ -95,7 +95,7 @@ mean_cluster_1 = sum(cluster_1)/len(cluster_1)
 mean_cluster_2 = sum(cluster_2)/len(cluster_2)
 mean_cluster_3 = sum(cluster_3)/len(cluster_3)
 
-fout_name = "out/inc2006acc_zone.csv"
+fout_name = "out/datos2007acc_zone.csv"
 headers = "Cluster;Number of accidents;Mean\n"
 
 with open(fout_name, 'w') as f_out:

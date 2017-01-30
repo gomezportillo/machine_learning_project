@@ -96,7 +96,7 @@ def calculate_accidents_by_hour(current_zona, current_date):
                 dic_20_3_accidents[current_zona] = 1
 
 lines = list()
-with open('data/inc2006zone.csv') as f_in:
+with open('data/datos2007filt_with_zones.csv') as f_in:
     for line in f_in:
         lines.append(line.split(";"))
 
@@ -122,32 +122,12 @@ for i in range(len(dic_traffic_level.keys())):
 
 
 line = ""
-with open('out/inc2006features.csv', 'w') as f_out:
+with open('out/datos2007_features.csv', 'w') as f_out:
     for zone in range(158):
         try:
-            line = str(dic_reason['Alcance', zone]) + ";"
+            line = str(dic_reason['Obras', zone]) + ";"
         except KeyError:
             line = "0;"
-
-        try:
-            line += str(dic_reason['Atropello', zone]) + ";"
-        except KeyError:
-            line += "0;"
-
-        try:
-            line += str(dic_reason['Vuelco', zone]) + ";"
-        except KeyError:
-            line += "0;"
-
-        try:
-            line += str(dic_reason['Tijera camin', zone]) + ";"
-        except KeyError:
-            line += "0;"
-
-        try:
-            line += str(dic_reason['Salida', zone]) + ";"
-        except KeyError:
-            line += "0;"
 
         try:
             line += str(dic_traffic_level['Rojo', zone]) + ";"
